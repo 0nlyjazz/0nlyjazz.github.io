@@ -1,8 +1,6 @@
-# My notes about Rust, Raspberry Pi, Linux kernel and more...
+# Notes about cross-compilation on ARM64, Linux kernel, Raspberry Pi, Rust etc.
 
-Disclaimer: The following content are my personal notes and I cannot guarantee that
-it will work for you. If you're going to use them, you're on your own.
-I've tried it on ubuntu 22.04 LTS running as a VM (host: ubuntu 22.10)
+Disclaimer: The following content are my personal notes and I cannot guarantee that it will work for you. If you're going to use them, you're on your own. I've tried it on ubuntu 22.04 LTS running as a VM (host: ubuntu 22.10)
 
 
 ## Aim: provide rust support in one of the stable kernels out there.
@@ -40,6 +38,9 @@ Not only this will serve as a nice little weekend project but also, I can keep p
 2. Configure and cross-compile stable kernel (5.15.y) for aarch64
 3. Configure and cross-compile busybox for aarch64
 4. Configure and cross-compile raspberry pi kernel for aarch64
+Note: I used kernel 5.15.y as it matches with my raspberry pi kernel version which I use.
+If you've a different kernel running, steps will be same moreorless. 
+
 
 ### Step 3: Use Qemu to emulate arm64 cpu and bootup the kernel in it,
 
@@ -48,14 +49,18 @@ Not only this will serve as a nice little weekend project but also, I can keep p
 3. boot and test raspberry pi kernel 
 
 
-#### Let's dive into Step 1 (Getting the required sources and setting up build enrionment)
+#### Let's dive into Step 1 (Getting the required sources and setting up build environment)
 
 
 * Clone the following projects: rust-for-linux, busybox, stable kernel tree, raspberry pi kernel<br>
+
+Kernel trees
 <code>git clone https://github.com/Rust-for-Linux/linux.git</code><br>
-<code>git clone https://github.com/mirrors/busybox.git</code><br>
 <code>git clone https://github.com/gregkh/linux.git</code><br>
 <code>git clone https://github.com/raspberrypi/linux.git</code><br>
+Userland
+<code>git clone https://github.com/mirrors/busybox.git</code><br>
+
 
 * Install required packages and setup a development environment
 ```
@@ -143,4 +148,107 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4
 Note: This is a "minimal" userland so there won't be a lot of "commonly expected" features to be present.
 The intention is to establish a baseline system that works so that we can fallback to it incase we run into some issues.
 
+
+A few things needs to be done for busybox before we can run the show:
+1. Add procfs support. 
+2. Add the inittab
+3. Add /etc/init.d/rcS file
+
+Now, let's see how we can do that. As we know already, busybox is going to be our "tiny" rootfs, 
+so let's add some basic configuration to it.
+In the busybox/_install directory: 
+
+```
+cp ../exammples/inittab .
+mkdir -p etc/init.d
+echo "mkdir -p /proc" > etc/init.d/rcS
+echo "mount -t proc none /proc" >> etc/init.d/rcS"
+chmod a+x etc/init.d/rcS
+
+```
+
+Note:
+Delete following lines in etc/inittab
+```
+ # Start an "askfirst" shell on /dev/tty2-4                                                                       tty2::askfirst:-/bin/sh
+ tty3::askfirst:-/bin/sh
+ tty4::askfirst:-/bin/sh
+ # /sbin/getty invocations for selected ttys
+ tty4::respawn:/sbin/getty 38400 tty5
+ tty5::respawn:/sbin/getty 38400 tty6
+ ```
+
+Pack the ramdisk by running the following command inside <code>_install</code> directory:
+
+```
+find . | cpio -H newc -o | gzip > ../ramdisk.img
+
+```
+
+## Important note:
+* Busybox seems not viable for the ARM64 cross compilation environment
+* Needed to switch to buildroot. 
+* Buildroot can be downloaded from 
+```
+git clone https://git.buildroot.net/buildroot
+
+make menuconfig
+
+Target options
+    Target Architecture - Aarch64 (little endian)
+Toolchain type
+    External toolchain - Linaro AArch64
+System Configuration
+[*] Enable root login with password
+        ( ) Root password = set your password using this option
+[*] Run a getty (login prompt) after boot  --->
+    TTY port - ttyAMA0
+Target packages
+    [*]   Show packages that are also provided by busybox
+    Networking applications
+        [*] dhcpcd
+        [*] iproute2
+        [*] openssh
+Filesystem images
+    [*] ext2/3/4 root filesystem
+        ext2/3/4 variant - ext3
+        exact size in blocks - 6000000
+    [*] tar the root filesystem
+
+make
+```
+
+## QEMU kernel bootup command-line
+
+```
+qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic -smp 2 -append "console=ttyAMA0 root=/dev/vda oops=panic debug " -kernel WORK/github-forks/rust-4-linux/arch/arm64/boot/Image -hda WORK/buildroot/output/images/rootfs.ext2 -m 2048
+
+CONFIG_DEBUG_INFO=y
+CONFIG_CMDLINE="console=ttyAMA0"
+
+```
+
+
+
+
+
+
+
 ----------------------------------
+# Rust specific details
+
+* Rust : Setting up environment:
+Presentation video: https://www.youtube.com/watch?v=tPs1uRqOnlk
+Slides: https://events.linuxfoundation.org/wp-content/uploads/2022/10/Wedson-Almeida-Filho-9_29_22-webinar-slide-deck-LF-Session-2.pdf
+
+* Rust: Writing kernel modules in Rust:
+Presentation: https://www.youtube.com/watch?v=-l-8WrGHEGI
+Slides: https://events.linuxfoundation.org/wp-content/uploads/2022/10/Wedson-Almeida-Filho-LF-Writing-Linux-Kernel-Modules-in-Rust.pdf
+
+* Rust code documentation and tests:
+Presentation: https://www.youtube.com/watch?v=J8yoUQKEY5g
+Slides: https://events.linuxfoundation.org/wp-content/uploads/2022/04/2022-04-20-Linux-Foundation-LF-Live-Mentorship-Series-Rust-for-Linux-Code-Documentation-Tests.pdf
+
+* Rust : Writing safe abstractions and drivers:
+Presentation: https://www.youtube.com/watch?v=3VU0hfsbHdc
+Slides: https://events.linuxfoundation.org/wp-content/uploads/2021/11/2021-11-11-Linux-Foundation-LF-Live_-Mentorship-Series-Rust-for-Linux_-Writing-Safe-Abstractions-Drivers.pdf
