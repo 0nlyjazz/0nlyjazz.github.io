@@ -1,7 +1,7 @@
-# My notes about Rust, Raspberry, Linux kernel and more...
+# My notes about Rust, Raspberry Pi, Linux kernel and more...
 
 Disclaimer: The following content are my personal notes and I cannot guarantee that
-it will work for you. If you're going to use them, you're on your own
+it will work for you. If you're going to use them, you're on your own.
 
 ##### Compiling latest Rust enabled linux kernel for aarch64:
 
@@ -14,7 +14,7 @@ I've tried it on ubuntu 22.04 LTS running as a VM (host: ubuntu 22.10)
 
 ```
 sudo apt update && sudo apt install flex bison build-essential \
- libncurses-dev libssl-dev libelf-dev clang lld llvm wget autoconf automake
+ libncurses-dev libssl-dev libelf-dev clang lld llvm wget autoconf automake \
  gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
  ```
 
