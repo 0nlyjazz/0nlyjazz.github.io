@@ -69,25 +69,27 @@ rustup component add rust-src
 
 #### The step 2 (configuring and compiling the sources)
 
-Make a minimal compilation configuration
+* Configure and cross-compile rust-for-linux tree (this is essentially same for other two kernels)
+    However, rust configuration is not present by default so we need to omit the "rust.config" from configuration option.
+    
  ```
  make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config
  ```
 
-Compile the kernel
+* Compile the kernel
 ```
 make ARCH=arm64 LLVM=1 -j4
 ```
 Note: -j4 is used by me as my vm was configured with 4 CPUs.
 
 
-Cross compile busybox
+* Configure and cross-compile busybox
 ```
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 ```
-Enable static linking (menuconfig -> settings -> Build Options -> Build static library)
+* Enable static linking (menuconfig -> settings -> Build Options -> Build static library)
 
-Build busybox
+* Build busybox
 ```
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4
 ```
