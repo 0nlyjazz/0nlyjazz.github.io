@@ -191,7 +191,10 @@ find . | cpio -H newc -o | gzip > ../ramdisk.img
 * Buildroot can be downloaded from 
 ```
 git clone https://git.buildroot.net/buildroot
+```
 
+## Build it 
+```
 make menuconfig
 
 Target options
