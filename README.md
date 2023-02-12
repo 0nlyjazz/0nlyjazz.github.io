@@ -37,4 +37,14 @@ rustup component add rust-src
  <code>make ARCH=arm64 LLVM=1 -j4</code><br>
 Note: -j4 is used by me as my vm was configured with 4 CPUs.
 
-6. To be updated ....
+6. Download busybox <br><code>git clone https://github.com/mirrors/busybox.git</code>
+
+7. Cross compile busybox
+```
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+```
+8. Enable static linking (menuconfig -> settings -> Build Options -> Build static library)
+
+9. Build busybox<br><code>make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4</code>
+
+10. To be continued....
