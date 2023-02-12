@@ -55,9 +55,9 @@ Rust needs to be installed, download the <code>rustup</code> tool from the follo
 
 Then perform the default installation and after that we need to:
 
-a. install a specific version of the compiler & its toolchain 
-b. install the bindgen (this will serve as interface between existing C code and Rust)
-c. install the rust source as it is needed by core kernel rust modules 'core' and 'alloc'
+a. install a specific version of the compiler & its toolchain<br>
+b. install the bindgen (this will serve as interface between existing C code and Rust)<br>
+c. install the rust source as it is needed by core kernel rust modules 'core' and 'alloc'<br>
 
 Go to rust-for-linux tree and run the following commands:
 
@@ -71,7 +71,7 @@ rustup component add rust-src
 
 * Configure and cross-compile rust-for-linux tree (this is essentially same for other two kernels)
     However, rust configuration is not present by default so we need to omit the "rust.config" from configuration option.
-    
+
  ```
  make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config
  ```
