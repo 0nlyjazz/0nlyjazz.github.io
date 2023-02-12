@@ -93,6 +93,7 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4 \
     CFLAGS="-march=armv8-a+crc -mtune=cortex-a72" \
     bindeb-pkg
 ```
+
 Note: the bindeb-pkg requires extra packages to be installed, refer step #1 
 
 
