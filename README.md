@@ -5,6 +5,25 @@ it will work for you. If you're going to use them, you're on your own.
 I've tried it on ubuntu 22.04 LTS running as a VM (host: ubuntu 22.10)
 
 
+## Aim: provide rust support in one of the stable kernels out there.
+I've been using one of the stable kernels (5.15.y) for some of my hobby projects that 
+includes a raspberry pi. Lately, I've started learning Rust and the project 
+"Rust for Linux" grabbed my attention particularly. Seriously, a second language in kernel?
+
+C++ was considered but quickly removed as it didn't serve the purpose & when we all 
+started to think that C and assembly will be the de-facto language of the kernel and *boom* ...
+rust happened!
+
+Thanks to Miguel and the fantastic "Rust for linux" commuinity, kernel 6.1 finally saw Rust being
+mainlined and this got me thinking...
+
+How about giving rust support to one of the older, stable kernel branches? (pardon my overusage of the word 'stable', I certainly mean 'long-term supported' kernels)
+
+Meanwhile something else happened, my sole raspberry pi board went kaput and due to acute semiconductor shortage, a replacement will take quite sometime to arrive but hey! QEmu to the rescue :-)
+
+Not only this will serve as a nice little weekend project but also, I can keep playing with the software and by the time the board arrives, my rustified kernel will be ready. 
+
+
 ## In a nutshell:
 
 
@@ -116,5 +135,11 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4
 
 ```
+
+
+### Now, we need to boot our freshly baked kernels (rust-for-linux, stable and raspberry pi) using the busybox as our userland.
+
+Note: This is a "minimal" userland so there won't be a lot of "commonly expected" features to be present.
+The intention is to establish a baseline system that works so that we can fallback to it incase we run into some issues.
 
 ----------------------------------
