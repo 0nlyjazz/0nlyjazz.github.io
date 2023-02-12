@@ -22,11 +22,14 @@ sudo apt update && sudo apt install flex bison build-essential \
 
 3. Rust needs to be installed, download the <code>rustup</code> tool from the following
 <code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code>
-Then perform the default installation and after that we need to do the following:
+Then perform the default installation and after that we need to:
+a. install a specific version of the compiler & its toolchain 
+b. install the bindgen (this will serve as interface between existing C code and Rust)
+c. install the rust source as it is needed by core kernel rust modules 'core' and 'alloc'
 ```
-rustup override set $(scripts/min-tool-version.sh rustc) // kernel needs a specific version of rust compiler
-cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen // install the bindgen tool, this will serve as interface between existing C code and Rust code.
-rustup component add rust-src // rust-src is needed by core rust component of kernel core & alloc
+rustup override set $(scripts/min-tool-version.sh rustc)
+cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
+rustup component add rust-src
 ```
 
 4. Make a minimal compilation configuration 
