@@ -67,6 +67,7 @@ c. install the rust source as it is needed by core kernel rust modules 'core' an
 rustup override set $(scripts/min-tool-version.sh rustc)
 cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
 rustup component add rust-src
+
 ```
 
 #### Let's dive into Step 2 (configuring and compiling the sources)
@@ -76,10 +77,44 @@ rustup component add rust-src
 
 ```
  make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config
+
 ```
 
 * Cross compile the rust-for-linux tree
 
 
+```
+make ARCH=arm64 LLVM=1 -j4
+
+```
+Note: -j4 is used by me as my vm was configured with 4 CPUs.
+
+* Configure and cross-compile raspberry pi kernel
+
+```
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
+
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4 \
+    CXXFLAGS="-march=armv8-a+crc -mtune=cortex-a72" \
+    CFLAGS="-march=armv8-a+crc -mtune=cortex-a72" \
+    bindeb-pkg
+
+```
+
+Note: the bindeb-pkg requires extra packages to be installed, refer step #1 
+
+
+* Configure and cross-compile busybox
+```
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+
+```
+* Enable static linking (menuconfig -> settings -> Build Options -> Build static library)
+
+* Build busybox
+```
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4
+
+```
 
 ----------------------------------
