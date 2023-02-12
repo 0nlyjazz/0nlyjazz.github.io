@@ -1,9 +1,7 @@
-# Rust, Raspberry, Linux kernel and more...
+# My notest about Rust, Raspberry, Linux kernel and more...
 
 Disclaimer: The following content are my personal notes and I cannot guarantee that
 it will work for you. If you're going to use them, you're on your own
-
-#### My Notes:
 
 ##### Compiling latest Rust enabled linux kernel for aarch64:
 
