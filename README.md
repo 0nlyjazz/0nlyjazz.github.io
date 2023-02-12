@@ -32,12 +32,11 @@ cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
 rustup component add rust-src
 ```
 
-4. Make a minimal compilation configuration 
+4. Make a minimal compilation configuration<br>
  <code>make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config</code>
 
-5. Compile the kernel 
- <code>make ARCH=arm64 LLVM=1 -j4</code>
-
+5. Compile the kernel<br>
+ <code>make ARCH=arm64 LLVM=1 -j4</code><br>
 Note: -j4 is used by me as my vm was configured with 4 CPUs.
 
 6. To be updated ....
