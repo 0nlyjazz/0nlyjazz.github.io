@@ -67,15 +67,17 @@ cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
 rustup component add rust-src
 ```
 
-
-
 #### The step 2 (configuring and compiling the sources)
 
-Make a minimal compilation configuration<br>
- <code>make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config</code>
+Make a minimal compilation configuration
+ ```
+ make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config
+ ```
 
-Compile the kernel<br>
- <code>make ARCH=arm64 LLVM=1 -j4</code><br>
+Compile the kernel
+```
+make ARCH=arm64 LLVM=1 -j4
+```
 Note: -j4 is used by me as my vm was configured with 4 CPUs.
 
 
@@ -85,6 +87,9 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 ```
 Enable static linking (menuconfig -> settings -> Build Options -> Build static library)
 
-Build busybox<br><code>make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4</code>
+Build busybox
+```
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4
+```
 
 ----------------------------------
