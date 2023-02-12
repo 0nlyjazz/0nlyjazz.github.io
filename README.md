@@ -19,3 +19,10 @@ I've tried it on ubuntu 22.04 LTS running as a VM (host: ubuntu 22.10)
 sudo apt update && sudo apt install flex bison build-essential \
  libncurses-dev libssl-dev libelf-dev clang lld llvm
  ``` 
+ 3. Make a minimal compilation configuration 
+ <code> make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config</cde>
+
+ 4. Compile the kernel 
+ <code> make ARCH=arm64 LLVM=1 -j4</code>
+
+-> -j4 is used by me as my vm was configured with 4 CPUs.
