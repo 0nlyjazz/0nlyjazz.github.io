@@ -20,8 +20,8 @@ sudo apt update && sudo apt install flex bison build-essential \
  gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
  ```
 
-3. Rust needs to be installed, download the <code>rustup</code> tool from the following
-<code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code>
+3. Rust needs to be installed, download the <code>rustup</code> tool from the following<br>
+<code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code><br>
 Then perform the default installation and after that we need to:
 a. install a specific version of the compiler & its toolchain 
 b. install the bindgen (this will serve as interface between existing C code and Rust)
