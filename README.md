@@ -123,7 +123,8 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j4 \
 Note: the bindeb-pkg requires extra packages to be installed, refer step #1 
 
 
-* Configure and cross-compile busybox
+* Configure and cross-compile busybox<br>
+
 ```
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 
