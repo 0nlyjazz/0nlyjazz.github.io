@@ -74,10 +74,12 @@ rustup component add rust-src
 * Configure and cross-compile rust-for-linux tree (this is essentially same for other two kernels)
     However, rust configuration is not present by default so we need to omit the "rust.config" from configuration option.
 
- ```
+```
  make ARCH=arm64 LLVM=1 qemu-busybox-min.config rust.config
- ```
+```
+
 * Cross compile the rust-for-linux tree
+
 ```
 make ARCH=arm64 LLVM=1 -j4
 
