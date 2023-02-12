@@ -45,6 +45,12 @@ sudo apt update && sudo apt install flex bison build-essential \
  gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
  ```
 
+* We need some extra packages to be installed if we are compiling raspberry pi kernel as a debian package.
+
+```
+sudo apt install dpkg-dev libssl-dev autotools-dev
+```
+
 * Rust needs to be installed, download the <code>rustup</code> tool from the following<br>
 
 <code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code><br>
@@ -63,14 +69,6 @@ cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
 rustup component add rust-src
 ```
 
-* We need some extra packages to be installed if we are compiling raspberry pi kernel as a debian package.
-
-```
-sudo apt install dpkg-dev libssl-dev autotools-dev
-```
-
-
-
 #### Let's dive into Step 2 (configuring and compiling the sources)
 
 * Configure and cross-compile rust-for-linux tree (this is essentially same for other two kernels)
@@ -82,6 +80,7 @@ sudo apt install dpkg-dev libssl-dev autotools-dev
 * Cross compile the rust-for-linux tree
 ```
 make ARCH=arm64 LLVM=1 -j4
+
 ```
 Note: -j4 is used by me as my vm was configured with 4 CPUs.
 
