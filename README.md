@@ -231,6 +231,11 @@ CONFIG_CMDLINE="console=ttyAMA0"
 
 ```
 
+Libclang version:
+
+libclang-common-14-dev/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
+libclang-cpp14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
+libclang1-14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
 
 
 
@@ -255,3 +260,5 @@ Slides: https://events.linuxfoundation.org/wp-content/uploads/2022/04/2022-04-20
 * Rust : Writing safe abstractions and drivers:
 Presentation: https://www.youtube.com/watch?v=3VU0hfsbHdc
 Slides: https://events.linuxfoundation.org/wp-content/uploads/2021/11/2021-11-11-Linux-Foundation-LF-Live_-Mentorship-Series-Rust-for-Linux_-Writing-Safe-Abstractions-Drivers.pdf
+
+
