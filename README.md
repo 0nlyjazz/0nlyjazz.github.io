@@ -233,9 +233,10 @@ CONFIG_CMDLINE="console=ttyAMA0"
 
 Libclang version:
 
-libclang-common-14-dev/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
-libclang-cpp14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
-libclang1-14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]
+libclang-common-14-dev/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]<br>
+libclang-cpp14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]<br>
+libclang1-14/jammy,now 1:14.0.0-1ubuntu1 amd64 [installed,automatic]<br>
+
 
 
 
