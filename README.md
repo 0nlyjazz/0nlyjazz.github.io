@@ -263,3 +263,6 @@ Presentation: https://www.youtube.com/watch?v=3VU0hfsbHdc
 Slides: https://events.linuxfoundation.org/wp-content/uploads/2021/11/2021-11-11-Linux-Foundation-LF-Live_-Mentorship-Series-Rust-for-Linux_-Writing-Safe-Abstractions-Drivers.pdf
 
 
+# Rust analyzer
+
+* rust-analyzer.linkedProjects
